@@ -1,0 +1,1039 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "id": "4bee8180",
+      "metadata": {
+        "id": "4bee8180"
+      },
+      "source": [
+        "## 1. close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "8bf8bb70",
+      "metadata": {
+        "id": "8bf8bb70"
+      },
+      "source": [
+        "In Python, the close() method is used to close a file that has been opened. When you're done working with a file, it's essential to close it using the close() method. Closing a file is important for several reasons:\n",
+        "\n",
+        "- **Data Integrity:** Closing the file ensures that any data you have written to the file is properly saved and the file is updated with the latest changes.\n",
+        "\n",
+        "- **Resource Management:** Closing the file releases the system resources (like memory) that were being used to keep the file open. Failing to close files can lead to resource leaks, especially when dealing with a large number of files."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "dd7ecbc2",
+      "metadata": {
+        "id": "dd7ecbc2"
+      },
+      "source": [
+        "Here's how you use the close() method in Python"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "f15d708e",
+      "metadata": {
+        "id": "f15d708e"
+      },
+      "outputs": [],
+      "source": [
+        "# Open a file in write mode\n",
+        "file = open(\"example.txt\", \"w\")\n",
+        "\n",
+        "# Write some data to the file\n",
+        "file.write(\"Hello, World!\")\n",
+        "\n",
+        "# Close the file after writing\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "b9467d20",
+      "metadata": {
+        "id": "b9467d20"
+      },
+      "source": [
+        "**Explanation:**\n",
+        "\n",
+        "- open(\"example.txt\", \"w\") opens a file called \"example.txt\" in write mode (\"w\").\n",
+        "- file.write(\"Hello, World!\") writes the string \"Hello, World!\" to the file.\n",
+        "- file.close() closes the file, ensuring that any changes made to the file are saved and system resources are released."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "3b7c193f",
+      "metadata": {
+        "id": "3b7c193f"
+      },
+      "source": [
+        "Always remember to close your files after you're done working with them. If you're dealing with file operations inside a with statement, Python will automatically close the file for you when you exit the block of code. This is a safer way to handle files as it ensures that the file is properly closed, even if an exception occurs within the block of code:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "ddb67b6a",
+      "metadata": {
+        "id": "ddb67b6a"
+      },
+      "outputs": [],
+      "source": [
+        "with open(\"example.txt\", \"w\") as file:\n",
+        "    file.write(\"Hello, World!\")\n",
+        "\n",
+        "# File is automatically closed when the block is exited"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "a451d7cd",
+      "metadata": {
+        "id": "a451d7cd"
+      },
+      "source": [
+        "Using with statement is recommended because it promotes cleaner and more readable code, and it ensures that files are closed properly."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "ee88f0da",
+      "metadata": {
+        "id": "ee88f0da"
+      },
+      "source": [
+        "# 2. detach()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "69465f85",
+      "metadata": {
+        "id": "69465f85"
+      },
+      "source": [
+        "In Python, when you work with text files, the file object provides a text interface (methods like read(), readline(), write(), etc.) that allows you to work with strings. However, sometimes you might want to access the underlying binary data of the file without the text processing overhead. That's where the detach() method comes in.\n",
+        "\n",
+        "The detach() method separates the text interface from the underlying binary buffer. It returns the underlying binary buffer, allowing you to read or write raw binary data without any text encoding/decoding."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "f6247398",
+      "metadata": {
+        "id": "f6247398",
+        "outputId": "75ee1526-f5ab-40d3-f1a7-de8c6acc2a79"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Text Data (read using text interface): b'Hello, World!'\n",
+            "Binary Data (read using binary interface): b''\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open a text file in binary mode\n",
+        "file = open(\"example.txt\", \"rb\")\n",
+        "\n",
+        "# Read some text from the file using the text interface\n",
+        "text_data = file.read()\n",
+        "print(\"Text Data (read using text interface):\", text_data)\n",
+        "\n",
+        "# Separate the binary buffer from the text interface\n",
+        "binary_buffer = file.detach()\n",
+        "\n",
+        "# Read raw binary data from the file\n",
+        "binary_data = binary_buffer.read()\n",
+        "print(\"Binary Data (read using binary interface):\", binary_data)\n",
+        "\n",
+        "# Close the binary buffer separately\n",
+        "binary_buffer.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "533e7155",
+      "metadata": {
+        "id": "533e7155"
+      },
+      "source": [
+        "In this example, the detach() method separates the text interface from the binary buffer, allowing you to read raw binary data from the file. The binary buffer is then used to read the binary data, and it needs to be closed separately after use."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "6349083b",
+      "metadata": {
+        "id": "6349083b"
+      },
+      "source": [
+        "# 3. fileno()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "4e4664de",
+      "metadata": {
+        "id": "4e4664de"
+      },
+      "source": [
+        "The fileno() method returns the file descriptor of the file object. This file descriptor can be used with lower-level I/O operations, especially in Unix-like operating systems, where file descriptors are widely used for input/output operations."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "f1ef0e91",
+      "metadata": {
+        "id": "f1ef0e91",
+        "outputId": "76afa8bc-f67c-4c6b-bf21-89b63e463b47"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "File Descriptor: 3\n",
+            "Data read using file descriptor: b'Hello, Wor'\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open a file in read mode\n",
+        "file = open(\"example.txt\", \"r\")\n",
+        "\n",
+        "# Get the file descriptor using fileno() method\n",
+        "file_descriptor = file.fileno()\n",
+        "\n",
+        "# Print the file descriptor\n",
+        "print(\"File Descriptor:\", file_descriptor)\n",
+        "\n",
+        "# You can use this file descriptor for low-level I/O operations (not recommended for beginners)\n",
+        "# For example, using os.read() to read data from the file using the file descriptor\n",
+        "import os\n",
+        "\n",
+        "# Read 10 bytes from the file using the file descriptor\n",
+        "data = os.read(file_descriptor, 10)\n",
+        "print(\"Data read using file descriptor:\", data)\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "f88d3ffe",
+      "metadata": {
+        "id": "f88d3ffe"
+      },
+      "source": [
+        "In this example, the fileno() method is used to obtain the file descriptor associated with the file object. Then, the os.read() function (from the os module) is used to read 10 bytes of data from the file using the obtained file descriptor. Please note that using file descriptors directly for I/O operations is a low-level approach and might not be necessary for most everyday programming tasks. It's important to handle file operations using higher-level file methods unless you have a specific requirement for low-level operations."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "0ddf172a",
+      "metadata": {
+        "id": "0ddf172a"
+      },
+      "source": [
+        "# 4. flush()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "4df8a1c0",
+      "metadata": {
+        "id": "4df8a1c0"
+      },
+      "source": [
+        "When you write data to a file, Python doesn't immediately write it to the disk. Instead, it stores the data in an internal buffer to optimize the writing process. The flush() method is used to forcibly write the buffered data to the file on disk. This can be important in situations where you want to make sure that the data you've written is safely stored, even if the file is not closed yet."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "c58018e5",
+      "metadata": {
+        "id": "c58018e5"
+      },
+      "outputs": [],
+      "source": [
+        "# Open a file in write mode\n",
+        "file = open(\"example.txt\", \"w\")\n",
+        "\n",
+        "# Write data to the file\n",
+        "file.write(\"Hello, World!\")\n",
+        "\n",
+        "# Flush the internal buffer to ensure data is written to the file\n",
+        "file.flush()\n",
+        "\n",
+        "# Now, the data is physically stored on the disk\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "9d11e61e",
+      "metadata": {
+        "id": "9d11e61e"
+      },
+      "source": [
+        "In this example, the flush() method is called after writing data to the file. This ensures that the text \"Hello, World!\" is immediately written to the file on disk, even before the file is closed. Flushing the buffer is useful when you want to make sure that important data is not just stored in memory but is also persisted on the storage medium."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "348a33f5",
+      "metadata": {
+        "id": "348a33f5"
+      },
+      "source": [
+        "# 5. isatty()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "38166fa2",
+      "metadata": {
+        "id": "38166fa2"
+      },
+      "source": [
+        "The isatty() method returns True if the file object is connected to a terminal or False if it is not. This method is often used to determine whether a program is running interactively, allowing it to adapt its behavior based on whether it is being run in a terminal or as part of a script"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "cd547825",
+      "metadata": {
+        "id": "cd547825",
+        "outputId": "fa5eb731-3ffb-4d1a-8215-cec525a3782b"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "The file is not connected to a terminal device.\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open a file in read mode\n",
+        "file = open(\"example.txt\", \"r\")\n",
+        "\n",
+        "# Check if the file is associated with a terminal device\n",
+        "if file.isatty():\n",
+        "    print(\"The file is connected to a terminal device.\")\n",
+        "else:\n",
+        "    print(\"The file is not connected to a terminal device.\")\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "a7f6b6f8",
+      "metadata": {
+        "id": "a7f6b6f8"
+      },
+      "source": [
+        "In this example, the isatty() method is used to check if the file object (file) is associated with a terminal device. If the file is run in a terminal, the program will print: \"The file is connected to a terminal device.\" Otherwise, it will print: \"The file is not connected to a terminal device.\""
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "93b07fc9",
+      "metadata": {
+        "id": "93b07fc9"
+      },
+      "source": [
+        "# 6. read(n)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "49240c96",
+      "metadata": {
+        "id": "49240c96"
+      },
+      "source": [
+        "The read(n) method reads and returns the next n characters (or bytes) from the file. If no argument is provided, it reads the entire file. This method allows you to read a specific portion of the file, making it useful when you only need to work with a certain amount of data from a file."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "95570483",
+      "metadata": {
+        "id": "95570483",
+        "outputId": "045949f9-8c43-4d45-c30e-c51cac205407"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Read Data: Hello, Wor\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open the file in read mode\n",
+        "file = open(\"example.txt\", \"r\")\n",
+        "\n",
+        "# Read the first 10 characters from the file\n",
+        "data = file.read(10)\n",
+        "\n",
+        "# Print the read data\n",
+        "print(\"Read Data:\", data)\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "796fab09",
+      "metadata": {
+        "id": "796fab09"
+      },
+      "source": [
+        "In this example, the read(10) method is used to read the first 10 characters from the file. After executing this code, it will output:"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "a9a8fd62",
+      "metadata": {
+        "id": "a9a8fd62"
+      },
+      "source": [
+        "The read(10) method reads the first 10 characters from the file, which include \"Hello, Wor\". The file cursor moves after the characters read, so if you were to call read() again without an argument, it would start reading from the 11th character onward."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "e0172899",
+      "metadata": {
+        "id": "e0172899"
+      },
+      "source": [
+        "# 7. readable()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "26937e7c",
+      "metadata": {
+        "id": "26937e7c"
+      },
+      "source": [
+        "The readable() method checks if the file object has read permissions. If the file is readable, it returns True; otherwise, it returns False. This method is handy when you want to verify if a file can be read before attempting to read from it, avoiding potential errors when working with files."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "7d261334",
+      "metadata": {
+        "id": "7d261334",
+        "outputId": "577a5bb4-1bc2-4695-c54f-416725cd18db"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "The file is readable.\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open the file in read mode\n",
+        "file = open(\"example.txt\", \"r\")\n",
+        "\n",
+        "# Check if the file is readable\n",
+        "if file.readable():\n",
+        "    print(\"The file is readable.\")\n",
+        "else:\n",
+        "    print(\"The file is not readable.\")\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "a1671ae8",
+      "metadata": {
+        "id": "a1671ae8"
+      },
+      "source": [
+        "In this example, the readable() method is used to check if the file object file is readable. If it is, the program will print: \"The file is readable.\" Otherwise, it will print: \"The file is not readable.\"\n",
+        "\n",
+        "It's important to note that the readable() method does not change the file or its permissions; it only checks the readability status of the file."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "7e86234e",
+      "metadata": {
+        "id": "7e86234e"
+      },
+      "source": [
+        "# 8. seek()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "ce6d549a",
+      "metadata": {
+        "id": "ce6d549a"
+      },
+      "source": [
+        "The seek() method allows you to move the cursor to a specific position in the file. It takes two arguments:\n",
+        "\n",
+        "- **offset:** The number of bytes to move. A positive value moves the cursor forward, and a negative value moves it backward.\n",
+        "- **whence:** The reference position for the offset. It can take three values:\n",
+        "    - 0 (default): The beginning of the file.\n",
+        "    - 1: The current file position.\n",
+        "    - 2: The end of the file."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "13d27571",
+      "metadata": {
+        "id": "13d27571",
+        "outputId": "9227dc36-3656-4d78-98ab-24aafe21854c"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Initial Data: b'Hello, Wor'\n",
+            "Full Data after seek(0): b'Hello, World!'\n",
+            "Next Data after seek(15, 1): b''\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open the file in read mode\n",
+        "file = open(\"example.txt\", \"rb\")\n",
+        "\n",
+        "# Read the first 10 characters from the file\n",
+        "data = file.read(10)\n",
+        "print(\"Initial Data:\", data)\n",
+        "\n",
+        "# Move the cursor to the beginning of the file\n",
+        "file.seek(0)\n",
+        "\n",
+        "# Read the entire file content from the beginning\n",
+        "full_data = file.read()\n",
+        "print(\"Full Data after seek(0):\", full_data)\n",
+        "\n",
+        "# Move the cursor 15 bytes from the current position\n",
+        "file.seek(15, 1)\n",
+        "\n",
+        "# Read the next 10 characters from the current position\n",
+        "next_data = file.read(10)\n",
+        "print(\"Next Data after seek(15, 1):\", next_data)\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "9ffcd7c4",
+      "metadata": {
+        "id": "9ffcd7c4"
+      },
+      "source": [
+        "In this example, the seek() method is used to move the cursor within the file. After seeking to different positions, it reads the content from that position onward."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "c074de3d",
+      "metadata": {
+        "id": "c074de3d"
+      },
+      "source": [
+        "Here's a breakdown of the code:\n",
+        "\n",
+        "- seek(0): Moves the cursor to the beginning of the file.\n",
+        "- seek(15, 1): Moves the cursor 15 bytes from the current position and reads the next 10 characters."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "ab715ae2",
+      "metadata": {
+        "id": "ab715ae2"
+      },
+      "source": [
+        "# 9. seekable()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "7eb0f095",
+      "metadata": {
+        "id": "7eb0f095"
+      },
+      "source": [
+        "The seekable() method checks if the file object supports random access or seeking. A file object is seekable if it allows you to change the current position within the file, enabling operations like seek() and random access reads or writes."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "6d43d46a",
+      "metadata": {
+        "id": "6d43d46a",
+        "outputId": "6f25be84-dc64-452a-e95f-bd0fb2649d1d"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "The file is seekable.\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open the file in read mode\n",
+        "file = open(\"example.txt\", \"r\")\n",
+        "\n",
+        "# Check if the file object is seekable\n",
+        "if file.seekable():\n",
+        "    print(\"The file is seekable.\")\n",
+        "else:\n",
+        "    print(\"The file is not seekable.\")\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "352cb717",
+      "metadata": {
+        "id": "352cb717"
+      },
+      "source": [
+        "In this example, the seekable() method is used to check if the file object (file) is seekable. If it is, the program will print: \"The file is seekable.\" Otherwise, it will print: \"The file is not seekable.\"\n",
+        "\n",
+        "Using seekable() can be helpful when you want to ensure that you can perform random access operations (e.g., moving the cursor to a specific position within the file) before attempting such operations on a file."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "03275676",
+      "metadata": {
+        "id": "03275676"
+      },
+      "source": [
+        "# 10. tell()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "578eeaf6",
+      "metadata": {
+        "id": "578eeaf6"
+      },
+      "source": [
+        "The tell() method returns the current position of the file cursor in the file. It tells you where you are within the file, in terms of the number of bytes from the beginning."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "50102dbd",
+      "metadata": {
+        "id": "50102dbd",
+        "outputId": "8d1aa07a-cd13-4ae0-a1c2-2ab2d94e2209"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Read Data: Hello, Wor\n",
+            "Current Position: 10\n",
+            "Next Data: ld!\n",
+            "Updated Position: 13\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open the file in read mode\n",
+        "file = open(\"example.txt\", \"r\")\n",
+        "\n",
+        "# Read the first 10 characters from the file\n",
+        "data = file.read(10)\n",
+        "print(\"Read Data:\", data)\n",
+        "\n",
+        "# Get the current position of the file cursor\n",
+        "position = file.tell()\n",
+        "print(\"Current Position:\", position)\n",
+        "\n",
+        "# Read the next 10 characters from the current position\n",
+        "next_data = file.read(10)\n",
+        "print(\"Next Data:\", next_data)\n",
+        "\n",
+        "# Get the updated position of the file cursor\n",
+        "updated_position = file.tell()\n",
+        "print(\"Updated Position:\", updated_position)\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "81016e0a",
+      "metadata": {
+        "id": "81016e0a"
+      },
+      "source": [
+        "In this example, the tell() method is used to determine the current position of the file cursor. After reading the initial 10 characters, the tell() method tells us the position where the cursor is located within the file. Then, after reading the next 10 characters, tell() is used again to get the updated position."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "d38d7645",
+      "metadata": {
+        "id": "d38d7645"
+      },
+      "source": [
+        "# 11. truncate()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "4ce4b31a",
+      "metadata": {
+        "id": "4ce4b31a"
+      },
+      "source": [
+        "The truncate() method changes the size of the file. If you provide a size argument, the file is truncated to that size. If you don't provide a size, it truncates the file at the current position of the file cursor. Any data beyond the specified size will be removed from the file."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "49ed7d01",
+      "metadata": {
+        "id": "49ed7d01",
+        "outputId": "5cb91afb-d461-47a1-ab4a-9acb32aa1a80"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Initial Content:\n",
+            "Hello, World!\n",
+            "\n",
+            "Updated Content:\n",
+            "Hello, Wor\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open the file in read/write mode\n",
+        "file = open(\"example.txt\", \"r+\")\n",
+        "\n",
+        "# Read the initial content of the file\n",
+        "print(\"Initial Content:\")\n",
+        "print(file.read())\n",
+        "\n",
+        "# Set the file cursor position to 10 characters from the beginning\n",
+        "file.seek(10)\n",
+        "\n",
+        "# Truncate the file at the current position (removing data after position 10)\n",
+        "file.truncate()\n",
+        "\n",
+        "# Set the file cursor position to the beginning\n",
+        "file.seek(0)\n",
+        "\n",
+        "# Read the updated content of the file\n",
+        "print(\"\\nUpdated Content:\")\n",
+        "print(file.read())\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "f22df429",
+      "metadata": {
+        "id": "f22df429"
+      },
+      "source": [
+        "In this example, the truncate() method is used to remove data from the file starting from the current cursor position (position 10 in this case). After truncation, any data after the specified position is removed from the file. As you can see, the file has been truncated at position 10, removing the text after that position. The truncate() method is useful when you need to resize a file or remove unwanted data from the end of the file."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "3b560ea4",
+      "metadata": {
+        "id": "3b560ea4"
+      },
+      "source": [
+        "# 12. writable()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "e9ab883b",
+      "metadata": {
+        "id": "e9ab883b"
+      },
+      "source": [
+        "The writable() method checks if the file object has write permissions. If the file is writable, it returns True; otherwise, it returns False. This method is helpful when you want to verify if a file can be written to before attempting to perform write operations on it."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "76e920cb",
+      "metadata": {
+        "id": "76e920cb",
+        "outputId": "e268f89e-b0e4-4ac3-b16d-3b940dcdc283"
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "The file is writable.\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Open the file in write mode\n",
+        "file = open(\"example.txt\", \"w\")\n",
+        "\n",
+        "# Check if the file object is writable\n",
+        "if file.writable():\n",
+        "    print(\"The file is writable.\")\n",
+        "else:\n",
+        "    print(\"The file is not writable.\")\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "5626e4f9",
+      "metadata": {
+        "id": "5626e4f9"
+      },
+      "source": [
+        "In this example, the writable() method is used to check if the file object file is writable. If it is, the program will print: \"The file is writable.\" Otherwise, it will print: \"The file is not writable.\"\n",
+        "\n",
+        "Using writable() can be helpful to ensure that you can perform write operations (such as adding data or modifying the file) on a file before attempting to write to it."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "edd4620a",
+      "metadata": {
+        "id": "edd4620a"
+      },
+      "source": [
+        "# 13. write(s)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "a47207f3",
+      "metadata": {
+        "id": "a47207f3"
+      },
+      "source": [
+        "The write(s) method writes the specified string s to the file. If the file doesn't exist, it will be created. If it does exist, the method will overwrite the existing content with the new string. If you want to append to an existing file without overwriting its content, you can open the file in append mode (\"a\")."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "ec70d1ab",
+      "metadata": {
+        "id": "ec70d1ab"
+      },
+      "outputs": [],
+      "source": [
+        "# Open the file in write mode\n",
+        "file = open(\"example.txt\", \"w\")\n",
+        "\n",
+        "# Write a string to the file\n",
+        "file.write(\"Hello, World!\")\n",
+        "\n",
+        "# Close the file\n",
+        "file.close()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "65d3bb07",
+      "metadata": {
+        "id": "65d3bb07"
+      },
+      "source": [
+        "In this example, the write(\"Hello, World!\") method is used to write the string \"Hello, World!\" to the file. After running this code, it will create a file named \"example.txt\" with the content \"Hello, World!\"."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "0e5835b5",
+      "metadata": {
+        "id": "0e5835b5"
+      },
+      "source": [
+        "Remember, it's important to close the file after writing to ensure that the data is properly saved and the file resources are released. You can also use the with statement to automatically close the file after the block of code is executed:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "cea5a769",
+      "metadata": {
+        "id": "cea5a769"
+      },
+      "outputs": [],
+      "source": [
+        "# Write to the file using the with statement\n",
+        "with open(\"example.txt\", \"w\") as file:\n",
+        "    file.write(\"Hello, World!\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "ab641f0f",
+      "metadata": {
+        "id": "ab641f0f"
+      },
+      "source": [
+        "This code accomplishes the same task but ensures that the file is closed properly, even if an error occurs during the writing process."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "7aa6cff9",
+      "metadata": {
+        "id": "7aa6cff9"
+      },
+      "source": [
+        "# 14. writelines(lines)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "89b8f0e5",
+      "metadata": {
+        "id": "89b8f0e5"
+      },
+      "source": [
+        "The writelines(lines) method writes each string in the lines list as a separate line in the file. It does not add line separators (\\n) between the lines, so if you want each line to be on a new line in the file, you need to add the newline character (\\n) to the end of each string before using writelines()."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "041cd86e",
+      "metadata": {
+        "id": "041cd86e"
+      },
+      "outputs": [],
+      "source": [
+        "# List of strings to write to the file\n",
+        "lines = [\"Line 1\\n\", \"Line 2\\n\", \"Line 3\\n\"]\n",
+        "\n",
+        "# Open the file in write mode\n",
+        "with open(\"example.txt\", \"w\") as file:\n",
+        "    # Write the list of strings to the file\n",
+        "    file.writelines(lines)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "f9c97600",
+      "metadata": {
+        "id": "f9c97600"
+      },
+      "source": [
+        "In this example, the writelines(lines) method writes the strings from the lines list to the file. The newline characters (\\n) at the end of each string ensure that each line is written on a new line in the file"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "08e3cc11",
+      "metadata": {
+        "id": "08e3cc11"
+      },
+      "source": [
+        "Remember to open the file in write mode (\"w\") to allow writing, and always close the file after writing to ensure that the data is properly saved and the file resources are released. The with statement is used here to automatically close the file after the operation is complete."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "0d143d14",
+      "metadata": {
+        "id": "0d143d14"
+      },
+      "outputs": [],
+      "source": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3 (ipykernel)",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.10.9"
+    },
+    "colab": {
+      "provenance": []
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
